@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-@Entity
+@Entity(name = "app_user")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "user_type")
 public abstract class User {

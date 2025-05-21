@@ -1,6 +1,7 @@
 package br.com.darmesdev.DesafioInter.DarmesGlobalAccCaseTecnico.controller;
 
 import br.com.darmesdev.DesafioInter.DarmesGlobalAccCaseTecnico.model.dto.RemittanceRequest;
+import br.com.darmesdev.DesafioInter.DarmesGlobalAccCaseTecnico.model.dto.TransactionResponse;
 import br.com.darmesdev.DesafioInter.DarmesGlobalAccCaseTecnico.model.entities.Transaction;
 import br.com.darmesdev.DesafioInter.DarmesGlobalAccCaseTecnico.service.RemittanceService;
 import lombok.RequiredArgsConstructor;
@@ -19,12 +20,12 @@ public class RemittanceController {
     private final RemittanceService remittanceService;
 
     @PostMapping
-    public ResponseEntity<Transaction> createRemittance(@RequestBody RemittanceRequest request) {
+    public ResponseEntity<TransactionResponse> createRemittance(@RequestBody RemittanceRequest request) {
         Transaction transaction = remittanceService.executeRemittance(
                 request.senderId(),
                 request.receiverId(),
                 request.amountBRL()
         );
-        return ResponseEntity.ok(transaction);
+        return ResponseEntity.ok(TransactionResponse.fromEntity(transaction));
     }
 }

@@ -17,8 +17,8 @@ public record TransactionResponse(
     public static TransactionResponse fromEntity(Transaction transaction) {
         return new TransactionResponse(
                 transaction.getId(),
-                transaction.getBrlAmount(),
-                transaction.getUsdAmount(),
+                transaction.getAmountBRL(),
+                transaction.getAmountUSD(),
                 transaction.getExchangeRate(),
                 transaction.getTimestamp(),
                 transaction.getSender().getFullName(),

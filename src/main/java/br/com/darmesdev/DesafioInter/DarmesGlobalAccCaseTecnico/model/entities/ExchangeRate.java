@@ -24,7 +24,7 @@ public class ExchangeRate {
     @Column(nullable = false, unique = true)
     private LocalDate date;
 
-    @Column(nullable = false, precision = 19, scale = 6)
+    @Column(precision = 19, scale = 6)
     private BigDecimal rate;
 
     @Column(nullable = false)
@@ -33,5 +33,8 @@ public class ExchangeRate {
     public ExchangeRate(LocalDate date, BigDecimal rate) {
         this.date = date;
         this.rate = rate;
+    }
+    public ExchangeRate(LocalDate date) {
+        this(date, null);
     }
 }

@@ -72,4 +72,9 @@ H2 Console	http://localhost:8080/h2-console
 
 
 
-PS.: me desculpem pelos commits juntos e sem descrição, ontem e hoje eu corri bastante pra terminar a prova.
+PS.: na semana passada fiquei muito apertado e não consegui desenvolver a prova e como não recebi retorno da Greice se 
+poderia estender o prazo da prova achei que já tinha dado errado. Então basicamente esse foi o meu trabalho em uns 2/3 dias,
+se for contar o inicinho na semana. 
+
+PS2.: me desculpem pelos commits juntos e sem descrição, ontem e hoje eu corri bastante pra terminar a prova, tava codando o projeto
+todo de uma vez praticamente.

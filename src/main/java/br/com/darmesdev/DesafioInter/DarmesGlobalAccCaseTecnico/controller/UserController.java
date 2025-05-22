@@ -13,6 +13,12 @@ import br.com.darmesdev.DesafioInter.DarmesGlobalAccCaseTecnico.service.exceptio
 import br.com.darmesdev.DesafioInter.DarmesGlobalAccCaseTecnico.service.exceptions.creation.EmailAlreadyExistsException;
 import br.com.darmesdev.DesafioInter.DarmesGlobalAccCaseTecnico.service.exceptions.query.UserNotFoundException;
 import br.com.darmesdev.DesafioInter.DarmesGlobalAccCaseTecnico.service.query.UserQueryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,11 +32,26 @@ import java.net.URI;
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
+@Tag(name = "Usuários", description = "APIs para gerenciamento de usuários")
 public class UserController {
 
     private final UserQueryService userQueryService;
     private final UserCreationStrategyManager strategyManager;
 
+    @Operation(
+            summary = "Criar um novo usuário pessoa física (PF)",
+            description = "Cria um novo usuário pessoa física com CPF"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Usuário criado com sucesso",
+                    content = @Content(schema = @Schema(implementation = UserResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Dados de requisição inválidos",
+                    content = @Content),
+            @ApiResponse(responseCode = "409", description = "Email ou CPF já existem",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
+                    content = @Content)
+    })
     @PostMapping("/pf")
     public ResponseEntity<UserResponse> createPFUser(@Valid @RequestBody UserPFRequest request) {
         try {
@@ -42,6 +63,20 @@ public class UserController {
         }
     }
 
+    @Operation(
+            summary = "Criar um novo usuário pessoa jurídica (PJ)",
+            description = "Cria um novo usuário pessoa jurídica com CNPJ"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Usuário criado com sucesso",
+                    content = @Content(schema = @Schema(implementation = UserResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Dados de requisição inválidos",
+                    content = @Content),
+            @ApiResponse(responseCode = "409", description = "Email ou CNPJ já existem",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
+                    content = @Content)
+    })
     @PostMapping("/pj")
     public ResponseEntity<UserResponse> createPJUser(@Valid @RequestBody UserPJRequest request) {
         try {
@@ -53,11 +88,33 @@ public class UserController {
         }
     }
 
+    @Operation(
+            summary = "Buscar usuário por ID",
+            description = "Recupera os detalhes de um usuário pelo seu ID"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Usuário encontrado",
+                    content = @Content(schema = @Schema(implementation = UserResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
+                    content = @Content)
+    })
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userQueryService.findById(id));
     }
 
+    @Operation(
+            summary = "Listar todos os usuários",
+            description = "Recupera uma lista paginada de todos os usuários"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Usuários recuperados com sucesso",
+                    content = @Content(schema = @Schema(implementation = Page.class))),
+            @ApiResponse(responseCode = "500", description = "Erro interno do servidor",
+                    content = @Content)
+    })
     @GetMapping
     public ResponseEntity<Page<UserResponse>> getAllUsers(Pageable pageable) {
         return ResponseEntity.ok(userQueryService.findAll(pageable));

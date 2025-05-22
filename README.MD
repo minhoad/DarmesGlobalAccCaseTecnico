@@ -44,12 +44,19 @@ Sistema de remessas internacionais entre usuários **Pessoa Física (PF)** e **P
 - 🐍 [Maven 3.6+](https://maven.apache.org/)
 - 🐳 [Docker](https://www.docker.com/) 
 
+### **Os testes**
+```bash
+./mvnw test
+```
+
+
+### **A aplicação**
 ### **Com Docker 🐳**
 ```bash
 docker-compose up --build -d
 ```
 
-### **Com Docker 🖥️**
+### **Sem Docker 🖥️**
 ```bash
 ./mvnw spring-boot:run
 ```
